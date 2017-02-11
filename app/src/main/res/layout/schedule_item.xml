@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/north_carolina_state"
+            android:id="@+id/teamLogo"
+            android:layout_weight="0.3" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
+            android:layout_weight="0.7"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Team Name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/teamName"
+                android:layout_weight="1"
+                android:textAlignment="viewStart"
+                android:gravity="center"
+                android:textStyle="bold"
+                />
+
+            <TextView
+                android:text="Game Date"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/gameDate"
+                android:layout_weight="1"
+                android:textAlignment="viewEnd"
+                android:paddingRight="12dp"
+                android:gravity="center"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

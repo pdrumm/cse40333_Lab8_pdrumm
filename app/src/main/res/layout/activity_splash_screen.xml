@@ -23,7 +23,20 @@
             android:text="@string/location"
             android:layout_centerHorizontal="true"
             android:textColor="@android:color/white"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:layout_alignParentTop="true"
+            />
+
+        <TextView
+            android:text="@string/sport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bballText"
+            android:textColor="@android:color/holo_orange_light"
+            android:textSize="22sp"
+            android:layout_below="@+id/ndText"
+            android:layout_centerHorizontal="true"
+            />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -35,17 +48,8 @@
             android:layout_centerHorizontal="false"
             android:nestedScrollingEnabled="true"
             android:scaleX="-1"
-            android:layout_marginTop="30dp" />
-
-        <TextView
-            android:text="@string/sport"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/bballText"
-            android:textColor="@android:color/holo_orange_light"
-            android:textSize="22sp"
-            android:layout_below="@+id/ndText"
-            android:layout_centerHorizontal="true" />
+            android:layout_marginTop="30dp"
+            />
 
     </RelativeLayout>
 
