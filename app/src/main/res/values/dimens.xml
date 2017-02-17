@@ -2,4 +2,25 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <!--
+    Dimens for activity_detail
+    -->
+    <!--Header-->
+    <dimen name="dateLocationPadding">10dp</dimen>
+    <dimen name="dateLocationHeight">50dp</dimen>
+    <dimen name="dateTextSize">12dp</dimen>
+    <dimen name="locationTextSize">12dp</dimen>
+    <!--Scoreboard-->
+    <dimen name="scoreboardPadding">10dp</dimen>
+    <dimen name="scoreboardHeight">100dp</dimen>
+    <dimen name="scoreboardChildWidth">0dp</dimen>
+    <dimen name="scoreboardTopRowTextSize">12dp</dimen>
+    <dimen name="scoreboardMidRowTextSize">16dp</dimen>
+    <dimen name="scoreboardBotRowTextSize">14dp</dimen>
+    <dimen name="scoreboardSchoolInfoSidePadding">8dp</dimen>
+    <!--Scoretable-->
+    <dimen name="scoretableSideMargin">10dp</dimen>
+    <dimen name="scoretableColSidePadding">10dp</dimen>
+    <dimen name="scoretableBorderHeight">1dp</dimen>
+    <dimen name="scoretableBorderMargin">1dp</dimen>
 </resources>

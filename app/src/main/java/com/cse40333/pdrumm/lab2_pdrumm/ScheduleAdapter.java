@@ -8,11 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class ScheduleAdapter extends ArrayAdapter<String[]> {
+public class ScheduleAdapter extends ArrayAdapter<Team> {
 
-    ScheduleAdapter(Context context, ArrayList<String[]> schedule) {
+    ScheduleAdapter(Context context, ArrayList<Team> schedule) {
         super(context, R.layout.schedule_item, schedule);
     }
 
@@ -21,16 +24,20 @@ public class ScheduleAdapter extends ArrayAdapter<String[]> {
         View scheduleView = scheduleInflater.inflate(R.layout.schedule_item, parent, false);
 
         // Retrieve the View elements
-        String[] matchItem = getItem(position);
+        Team matchItem = getItem(position);
         TextView teamName = (TextView) scheduleView.findViewById(R.id.teamName);
         TextView gameDate = (TextView) scheduleView.findViewById(R.id.gameDate);
         ImageView teamLogo = (ImageView) scheduleView.findViewById(R.id.teamLogo);
-        String mDrawableName = matchItem[2];
+        // Get team logo
+        String mDrawableName = matchItem.getTeamLogo();
         int resID = getContext().getResources().getIdentifier(mDrawableName , "drawable", getContext().getPackageName());
+        // Get date and format
+        DateFormat df = new SimpleDateFormat("MMM d", Locale.ENGLISH);
+        String dateString = df.format(matchItem.getGame().getGameDate());
 
         // Set the text/image properties of the View elements
-        teamName.setText(matchItem[0]);
-        gameDate.setText(matchItem[1]);
+        teamName.setText(matchItem.getTeamName());
+        gameDate.setText(dateString);
         teamLogo.setImageResource(resID);
 
         return scheduleView;

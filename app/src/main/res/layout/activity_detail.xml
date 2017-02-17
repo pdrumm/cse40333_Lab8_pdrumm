@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dateLocationHeight"
+        android:padding="@dimen/dateLocationPadding">
+
+        <TextView
+            android:text="Saturday, February 11, 6:00 PM"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/headerGameDate"
+            android:textSize="@dimen/dateTextSize" />
+
+        <TextView
+            android:text="Purcell Pavilion at the Joyce Center, Notre Dame, Indiana"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/headerGameLocation"
+            android:textSize="@dimen/locationTextSize" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/scoreboardHeight"
+        android:padding="@dimen/scoreboardPadding">
+
+        <ImageView
+            android:layout_width="@dimen/scoreboardChildWidth"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/florida_state"
+            android:id="@+id/school1Logo"
+            android:layout_weight="0.1" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="@dimen/scoreboardChildWidth"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.3"
+            android:paddingLeft="@dimen/scoreboardSchoolInfoSidePadding">
+
+            <TextView
+                android:text="Florida State"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1Name"
+                android:textSize="@dimen/scoreboardTopRowTextSize"
+                android:textAlignment="viewStart" />
+
+            <TextView
+                android:text="Seminoles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1Nickname"
+                android:textSize="@dimen/scoreboardMidRowTextSize"
+                android:textAlignment="viewStart"/>
+
+            <TextView
+                android:text="(21-5)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1Record"
+                android:textSize="@dimen/scoreboardBotRowTextSize"
+                android:textAlignment="viewStart"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="@dimen/scoreboardChildWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:layout_gravity="center">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/scoreboardTopRowTextSize" />
+
+            <TextView
+                android:text="72 - 84"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreboardGameScore"
+                android:textSize="@dimen/scoreboardMidRowTextSize"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:text="Final"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoreboardGameStatus"
+                android:layout_weight="1"
+                android:textSize="@dimen/scoreboardBotRowTextSize"
+                android:textAlignment="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="@dimen/scoreboardChildWidth"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:layout_gravity="center"
+            android:paddingRight="@dimen/scoreboardSchoolInfoSidePadding">
+
+            <TextView
+                android:text="Notre Dame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2Name"
+                android:textSize="@dimen/scoreboardTopRowTextSize"
+                android:textAlignment="viewEnd"/>
+
+            <TextView
+                android:text="Fighting Irish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2Nickname"
+                android:textSize="@dimen/scoreboardMidRowTextSize"
+                android:textAlignment="viewEnd"/>
+
+            <TextView
+                android:text="(19-7)"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2Record"
+                android:textSize="@dimen/scoreboardBotRowTextSize"
+                android:textAlignment="viewEnd"/>
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="@dimen/scoreboardChildWidth"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/georgia_tech"
+            android:id="@+id/school2Logo"
+            android:layout_weight="0.1" />
+
+    </LinearLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:stretchColumns="0"
+        android:layout_marginLeft="@dimen/scoretableSideMargin"
+        android:layout_marginRight="@dimen/scoretableSideMargin" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelFirstHalfScore"
+                android:layout_column="1"
+                android:textAlignment="center"
+                android:paddingLeft="@dimen/scoretableColSidePadding"
+                android:paddingRight="@dimen/scoretableColSidePadding" />
+
+            <TextView
+                android:text="2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelSecondHalfScore"
+                android:textAlignment="center"
+                android:paddingLeft="@dimen/scoretableColSidePadding"
+                android:paddingRight="@dimen/scoretableColSidePadding" />
+
+            <TextView
+                android:text="Total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelTotalScore"
+                android:textAlignment="center"
+                android:paddingLeft="@dimen/scoretableColSidePadding"
+                android:paddingRight="@dimen/scoretableColSidePadding" />
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/scoretableBorderHeight"
+            android:layout_marginTop="@dimen/scoretableBorderMargin"
+            android:background="@android:color/darker_gray" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Florida State"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoretableSchool1Name" />
+
+            <TextView
+                android:text="31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1FirstHalfScore"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:text="41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1SecondHalfScore"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:text="72"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school1TotalScore"
+                android:textAlignment="center"/>
+        </TableRow>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/scoretableBorderHeight"
+            android:layout_marginTop="@dimen/scoretableBorderMargin"
+            android:background="@android:color/darker_gray" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Notre Dame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/scoretableSchool2Name" />
+
+            <TextView
+                android:text="40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2FirstHalfScore"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:text="44"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2SecondHalfScore"
+                android:textAlignment="center"/>
+
+            <TextView
+                android:text="84"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/school2TotalScore"
+                android:textAlignment="center"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:text="@string/btnCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnCamera" />
+
+</LinearLayout>
