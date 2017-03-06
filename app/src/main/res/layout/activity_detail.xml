@@ -146,7 +146,7 @@
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:stretchColumns="0"
         android:layout_marginLeft="@dimen/scoretableSideMargin"
@@ -262,6 +262,12 @@
         </TableRow>
 
     </TableLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detailImgHeight"
+        android:padding="@dimen/detailImgPadding"
+        android:id="@+id/detailImg" />
 
     <Button
         android:text="@string/btnCamera"

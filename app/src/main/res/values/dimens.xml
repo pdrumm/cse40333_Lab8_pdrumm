@@ -23,4 +23,7 @@
     <dimen name="scoretableColSidePadding">10dp</dimen>
     <dimen name="scoretableBorderHeight">1dp</dimen>
     <dimen name="scoretableBorderMargin">1dp</dimen>
+    <!--Image-->
+    <dimen name="detailImgHeight">250dp</dimen>
+    <dimen name="detailImgPadding">50dp</dimen>
 </resources>
