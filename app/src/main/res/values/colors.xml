@@ -3,4 +3,17 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent21">#c340ff</color>
+
+    <color name="textColor">#343434</color>
+    <color name="textColorPrimary">#ffffff</color>
+    <color name="textColorSecondary">#000000</color>
+
+    <color name="windowBackground">#ffffff</color>
+
+    <color name="colorControlHighlight">#edea0d</color>
+    <color name="colorControlNormal">#aaa</color>
+    <color name="colorControlActivated">#0cf427</color>
+    <color name="colorButtonNormal">#f955f3</color>
+    <color name="colorButtonNormal21">#cc5eff</color>
 </resources>

@@ -2,6 +2,9 @@ package com.cse40333.pdrumm.lab2_pdrumm;
 
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 class Team implements Serializable {
     private String teamName;
@@ -55,5 +58,16 @@ class Team implements Serializable {
 
     public Game getGame() {
         return game;
+    }
+
+    public String getGameString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("(");
+        sb.append(this.teamName + ", ");
+        sb.append(this.game.getHomeTeam().teamStadium + ", ");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy", Locale.ENGLISH);
+        sb.append(df.format(this.game.getGameDate()));
+        sb.append(")");
+        return sb.toString();
     }
 }

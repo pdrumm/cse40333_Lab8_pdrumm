@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppMaterialTheme" parent="SuperMaterialTheme">
+        <!-- Customise for only Lollipop and Above Versions features. -->
+        <item name="android:navigationBarColor">#000</item>
+        <item name="colorAccent">@color/colorAccent21</item>
+        <item name="colorButtonNormal">@color/colorButtonNormal21</item>
+    </style>
+
+    <style name="MyToolbarTheme" parent="SuperToolbarTheme">
+        <item name="android:elevation">4dp</item>
+    </style>
+
+</resources>

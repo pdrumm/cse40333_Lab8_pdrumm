@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <item android:id="@+id/share"
+        android:orderInCategory="100"
+        android:title="Share"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_forum_black_24dp"
+        />
+
+    <item android:id="@+id/sync"
+        android:orderInCategory="100"
+        android:title="Sync"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_cached_black_24dp"
+        />
+
+    <item android:id="@+id/settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_settings_black_24dp"
+    />
+
+</menu>

@@ -1,6 +1,7 @@
 package com.cse40333.pdrumm.lab2_pdrumm;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
