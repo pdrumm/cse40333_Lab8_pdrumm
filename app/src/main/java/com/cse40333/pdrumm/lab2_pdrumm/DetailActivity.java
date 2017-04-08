@@ -2,6 +2,7 @@ package com.cse40333.pdrumm.lab2_pdrumm;
 
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,16 +33,75 @@ public class DetailActivity extends AppCompatActivity {
     private static final int CAMERA_INTENT = 1;
     private File OUTPUT;
     private String AUTHORITY = "com.cse40333.pdrumm.fileprovider";
+    DBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        // Grab items passed from previous activity
-        Game game = (Game) getIntent().getSerializableExtra("Game");
-        Team awayTeam = game.getAwayTeam();
-        Team homeTeam = game.getHomeTeam();
+        // Get the game id from prev activity
+        int gameId = getIntent().getIntExtra("gameId", 1);
+
+        // Get instance of database
+        dbHelper = new DBHelper(this.getApplicationContext());
+
+        // Query for the game info
+        String[] gameFields = dbHelper.getTableFields(dbHelper.TABLE_GAME);
+        Cursor cursor = dbHelper.getSelectEntries(
+                dbHelper.TABLE_GAME,
+                gameFields,
+                dbHelper.C_GAME_ID + " = " + gameId,
+                null);
+        cursor.moveToFirst();
+
+        // Retrieve all game info
+        Date gDate = new Date(cursor.getLong(cursor.getColumnIndex(dbHelper.C_GAME_DATE)));
+        int homeTeamId = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_HOME_TEAM_ID));
+        int awayTeamId = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_AWAY_TEAM_ID));
+        int homeFirstHalfScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_HOME_FIRST_HALF_SCORE));
+        int homeSecondHalfScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_HOME_SECOND_HALF_SCORE));
+        int homeFinalScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_HOME_FINAL_SCORE));
+        int awayFirstHalfScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_AWAY_FIRST_HALF_SCORE));
+        int awaySecondHalfScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_AWAY_SECOND_HALF_SCORE));
+        int awayFinalScore = cursor.getInt(cursor.getColumnIndex(dbHelper.C_GAME_AWAYS_FINAL_SCORE));
+
+        // Query for team data
+        // - Home team
+        String[] teamFields = dbHelper.getTableFields(dbHelper.TABLE_TEAM);
+        cursor = dbHelper.getSelectEntries(
+                dbHelper.TABLE_TEAM,
+                teamFields,
+                dbHelper.C_TEAM_ID + " = " + homeTeamId,
+                null);
+        cursor.moveToFirst();
+        String homeTeamName = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_NAME));
+        String homeTeamNickname = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_NICKNAME));
+        String homeTeamLogo = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_LOGO));
+        int homeTeamWins = cursor.getInt(cursor.getColumnIndex(dbHelper.C_TEAM_WINS));
+        int homeTeamLosses = cursor.getInt(cursor.getColumnIndex(dbHelper.C_TEAM_LOSSES));
+        String homeTeamStadium = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_STADIUM));
+        // - Away team
+        cursor = dbHelper.getSelectEntries(
+                dbHelper.TABLE_TEAM,
+                teamFields,
+                dbHelper.C_TEAM_ID + " = " + awayTeamId,
+                null);
+        cursor.moveToFirst();
+        String awayTeamName = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_NAME));
+        String awayTeamNickname = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_NICKNAME));
+        String awayTeamLogo = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_LOGO));
+        int awayTeamWins = cursor.getInt(cursor.getColumnIndex(dbHelper.C_TEAM_WINS));
+        int awayTeamLosses = cursor.getInt(cursor.getColumnIndex(dbHelper.C_TEAM_LOSSES));
+        String awayTeamStadium = cursor.getString(cursor.getColumnIndex(dbHelper.C_TEAM_STADIUM));
+
+
+        // Create object representations of data returned
+        Team awayTeam = new Team(awayTeamName, awayTeamNickname, awayTeamLogo, awayTeamWins, awayTeamLosses, awayTeamStadium);
+        Team homeTeam = new Team(homeTeamName, homeTeamNickname, homeTeamLogo, homeTeamWins, homeTeamLosses, homeTeamStadium);
+        Game game = new Game(gDate, awayTeam, homeTeam);
+        game.setAwayScore(awayFirstHalfScore, awaySecondHalfScore);
+        game.setHomeScore(homeFirstHalfScore, homeSecondHalfScore);
 
         // Get View elements
         TextView gameDate = (TextView) this.findViewById(R.id.headerGameDate);

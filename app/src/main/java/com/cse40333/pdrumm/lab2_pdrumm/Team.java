@@ -1,12 +1,15 @@
 package com.cse40333.pdrumm.lab2_pdrumm;
 
 
+import android.content.ContentValues;
+
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 class Team implements Serializable {
+    private int id = 0;
     private String teamName;
     private String teamNickname;
     private String teamLogo;
@@ -23,6 +26,23 @@ class Team implements Serializable {
         this.teamLosses = teamLosses;
         this.teamStadium = teamStadium;
     }
+
+    public ContentValues toContentValue(DBHelper dbHelper) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(dbHelper.C_TEAM_NAME, teamName);
+        contentValues.put(dbHelper.C_TEAM_NICKNAME, teamNickname);
+        contentValues.put(dbHelper.C_TEAM_LOGO, teamLogo);
+        contentValues.put(dbHelper.C_TEAM_WINS, teamWins);
+        contentValues.put(dbHelper.C_TEAM_LOSSES, teamLosses);
+        contentValues.put(dbHelper.C_TEAM_STADIUM, teamStadium);
+        return contentValues;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() { return id; }
 
     public void setGame(Game game) {
         this.game = game;

@@ -1,20 +1,28 @@
 package com.cse40333.pdrumm.lab2_pdrumm;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.support.design.widget.CoordinatorLayout;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -31,6 +39,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     Team notreDame;
+    DBHelper dbHelper;
     final ArrayList<Team> tableRows = new ArrayList<Team>();
 
     @Override
@@ -43,22 +52,26 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("ND Athletics");
 
+        // Instantiate Database
+        dbHelper = new DBHelper(this.getApplicationContext());
+        dbHelper.onUpgrade(dbHelper.getWritableDatabase(), 1, 1);
+
         // Create a "Notre Dame" team and then load in all opponent teams
         notreDame = new Team("Notre Dame", "Fighting Irish", "notre_dame", 20, 7, "Purcell Pavilion at the Joyce Center, Notre Dame, Indiana");
+        int rowId = dbHelper.insertData("Team", notreDame.toContentValue(dbHelper));
+        notreDame.setId(rowId);
         loadTeamData(tableRows);
 
-        // Create a Schedule adapter and attach it to the ListView
-        ListAdapter scheduleAdapter = new ScheduleAdapter(this, tableRows);
-        ListView scheduleListView = (ListView) findViewById(R.id.scheduleListView);
-        scheduleListView.setAdapter(scheduleAdapter);
+        // Add teams to the ListView
+        populateListView();
 
         // Create an event listener for each row in the schedule
+        ListView scheduleListView = (ListView) findViewById(R.id.scheduleListView);
         AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
-                Team team = tableRows.get(position);
-                intent.putExtra("Game", team.getGame());
+                intent.putExtra("gameId", position+1);
                 startActivity(intent);
             }
         };
@@ -184,9 +197,11 @@ public class MainActivity extends AppCompatActivity {
                 Game game = new Game(gameDate, away, home);
                 game.setHomeScore(Integer.parseInt(row[9]), Integer.parseInt(row[11]));
                 game.setAwayScore(Integer.parseInt(row[10]), Integer.parseInt(row[12]));
-                team.setGame(game);
-                // add the team to the array
-                teamArray.add(team);
+
+                // Write to database
+                int rowId = dbHelper.insertData("Team", team.toContentValue(dbHelper));
+                team.setId(rowId);
+                dbHelper.insertData("Game", game.toContentValue(dbHelper));
             }
         }
         catch (IOException ex) {
@@ -200,6 +215,80 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException("Error while closing input stream: "+e);
             }
         }
+    }
+
+    private void populateListView() {
+        //Get names of all the fields of the table Books
+        String[] fields = {dbHelper.C_TEAM_ID, dbHelper.C_TEAM_NAME, dbHelper.C_TEAM_LOGO, dbHelper.C_GAME_DATE};
+        String[] sqlFields = new String[fields.length-1];
+        for (int i=0; i<sqlFields.length; ++i) {
+            sqlFields[i] = dbHelper.TABLE_TEAM + "." + fields[i];
+        }
+
+        //Get all the book entries from the table Books
+        String sql = "SELECT " + TextUtils.join(", ", sqlFields) +
+                    ", " + dbHelper.TABLE_GAME + "." + dbHelper.C_GAME_DATE +
+                " FROM " + dbHelper.TABLE_TEAM +
+                " INNER JOIN " + dbHelper.TABLE_GAME +
+                " ON " + dbHelper.TABLE_TEAM + "." + dbHelper.C_TEAM_ID +
+                    " = " + dbHelper.TABLE_GAME + "." + dbHelper.C_GAME_HOME_TEAM_ID +
+                " OR " + dbHelper.TABLE_TEAM + "." + dbHelper.C_TEAM_ID +
+                " = " + dbHelper.TABLE_GAME + "." + dbHelper.C_GAME_AWAY_TEAM_ID +
+                " WHERE " + dbHelper.TABLE_TEAM + "." + dbHelper.C_TEAM_ID + " !=" + notreDame.getId();
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery(sql, null);
+
+        //Get ids of all the widgets in the custom layout for the listview
+        int[] item_ids = new int[] {-1, R.id.teamName, R.id.teamLogo, R.id.gameDate};
+
+        //Create the cursor that is going to feed information to the listview
+        SimpleCursorAdapter bookCursor;
+
+        //The adapter for the listview gets information and attaches it to appropriate elements
+        bookCursor = new SimpleCursorAdapter(getBaseContext(),
+                R.layout.schedule_item, cursor, fields, item_ids, 0);
+
+        // Override what happens for Logo and Date handlers
+        bookCursor.setViewBinder(new SimpleCursorAdapter.ViewBinder(){
+            @Override
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+                if (view.getId() == R.id.teamLogo) {
+                    ImageView teamLogo = (ImageView) view;
+                    int resID = getApplicationContext().getResources().getIdentifier(cursor.getString(columnIndex), "drawable", getApplicationContext().getPackageName());
+                    teamLogo.setImageResource(resID);
+                    return true;
+                } else if (view.getId() == R.id.gameDate) {
+                    DateFormat df = new SimpleDateFormat("MMM d", Locale.ENGLISH);
+                    Date date = new Date(cursor.getLong(columnIndex));
+                    String dateString = df.format(date);
+                    TextView gameDate = (TextView) view;
+                    gameDate.setText(dateString);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        ListView teamList = (ListView) findViewById(R.id.scheduleListView);
+        teamList.setAdapter(bookCursor);
+    }
+
+    public String getTableAsString(SQLiteDatabase db, String tableName) {
+        Log.d("myTAG", "getTableAsString called");
+        String tableString = String.format("Table %s:\n", tableName);
+        Cursor allRows  = db.rawQuery("SELECT * FROM " + tableName, null);
+        if (allRows.moveToFirst() ){
+            String[] columnNames = allRows.getColumnNames();
+            do {
+                for (String name: columnNames) {
+                    tableString += String.format("%s: %s\n", name,
+                            allRows.getString(allRows.getColumnIndex(name)));
+                }
+                tableString += "\n";
+
+            } while (allRows.moveToNext());
+        }
+
+        return tableString;
     }
 
 }
