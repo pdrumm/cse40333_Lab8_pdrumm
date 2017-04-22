@@ -41,7 +41,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         // Get the game id from prev activity
-        int gameId = getIntent().getIntExtra("gameId", 1);
+        final int gameId = getIntent().getIntExtra("gameId", 1);
 
         // Get instance of database
         dbHelper = new DBHelper(this.getApplicationContext());
@@ -160,7 +160,11 @@ public class DetailActivity extends AppCompatActivity {
         View.OnClickListener camClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GalleryActivity.class);
+                intent.putExtra("gameId", gameId);
+                startActivity(intent);
 
+                /*
                 String filename = getPictureName();
                 File imagePath = new File(getApplicationContext().getFilesDir(), "images");
                 if (!imagePath.exists()) imagePath.mkdirs();
@@ -176,6 +180,7 @@ public class DetailActivity extends AppCompatActivity {
                 );
                 cameraIntent.setFlags(FLAG_GRANT_WRITE_URI_PERMISSION);
                 startActivityForResult(cameraIntent, CAMERA_INTENT);
+                */
             }
         };
         cameraButton.setOnClickListener(camClick);

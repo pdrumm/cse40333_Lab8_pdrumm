@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -26,4 +26,9 @@
     <!--Image-->
     <dimen name="detailImgHeight">250dp</dimen>
     <dimen name="detailImgPadding">50dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Image Layout -->
+    <dimen name="text_size">12sp</dimen>
+    <dimen name="image_size">150dp</dimen>
 </resources>

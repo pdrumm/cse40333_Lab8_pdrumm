@@ -36,6 +36,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public static String C_GAME_HOME_FINAL_SCORE = "home_final_score";
     public static String C_GAME_AWAYS_FINAL_SCORE = "away_final_score";
 
+    public static String TABLE_IMAGES = "Images";
+    public static String C_IMAGES_ID = "_id";
+    public static String C_IMAGES_GAME = "game_id";
+    public static String C_IMAGES_IMAGE = "image_blob";
+    public static String C_IMAGES_DATE = "date";
+    public static String C_IMAGES_URI = "uri";
+
+
     public DBHelper (Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
@@ -67,12 +75,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 ")"
         );
 
+        db.execSQL("CREATE TABLE " + TABLE_IMAGES + " ( " +
+                C_IMAGES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                C_IMAGES_GAME + " INTEGER, " +
+                C_IMAGES_IMAGE + " BLOB, " +
+                C_IMAGES_DATE + " TEXT, " +
+                C_IMAGES_URI + " TEXT " +
+                ")"
+        );
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE if exists " + TABLE_GAME );
         db.execSQL("DROP TABLE if exists " + TABLE_TEAM );
+        db.execSQL("DROP TABLE if exists " + TABLE_IMAGES );
         onCreate(db);
     }
 
